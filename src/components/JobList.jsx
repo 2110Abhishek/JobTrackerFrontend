@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import "./JobList.css";
 
+const baseURL = process.env.REACT_APP_API_URL;
+
 const JobList = () => {
   const [jobs, setJobs] = useState([]);
 
   const fetchJobs = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/jobs");
+      const res = await axios.get(`${baseURL}/api/jobs`);
       setJobs(res.data);
     } catch (err) {
       console.error("Error fetching jobs:", err);
@@ -16,7 +18,7 @@ const JobList = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/jobs/${id}`);
+      await axios.delete(`${baseURL}/api/jobs/${id}`);
       setJobs((prev) => prev.filter((job) => job._id !== id));
       alert("🗑️ Job deleted successfully!");
     } catch (err) {
@@ -27,7 +29,7 @@ const JobList = () => {
 
   const handleStatusChange = async (id, newStatus) => {
     try {
-      await axios.put(`http://localhost:5000/api/jobs/${id}`, {
+      await axios.put(`${baseURL}/api/jobs/${id}`, {
         status: newStatus,
       });
 

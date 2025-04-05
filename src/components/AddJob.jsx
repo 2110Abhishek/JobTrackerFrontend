@@ -2,6 +2,8 @@ import { useState } from "react";
 import axios from "axios";
 import "./AddJob.css";
 
+const baseURL = process.env.REACT_APP_API_URL;
+
 const AddJob = () => {
   const [form, setForm] = useState({
     company: "",
@@ -17,7 +19,7 @@ const AddJob = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:5000/api/jobs", form);
+      const res = await axios.post(`${baseURL}/api/jobs`, form);
       console.log("Job added:", res.data);
       setForm({
         company: "",
